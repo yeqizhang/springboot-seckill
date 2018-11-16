@@ -106,7 +106,7 @@ public class UserService {
      * 根据token获取用户信息
      */
     public User getByToken(HttpServletResponse response, String token) {
-        if (StringUtils.isEmpty(token)) {
+        if (StringUtils.isEmpty(token)||token==null) {
             return null;
         }
         User user = redisService.get(UserKey.token, token, User.class);

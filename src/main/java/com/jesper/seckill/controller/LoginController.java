@@ -1,5 +1,6 @@
 package com.jesper.seckill.controller;
 
+import com.alibaba.druid.util.StringUtils;
 import com.jesper.seckill.result.Result;
 import com.jesper.seckill.service.UserService;
 import com.jesper.seckill.vo.LoginVo;
@@ -35,8 +36,16 @@ public class LoginController {
     @RequestMapping("/do_login")
     @ResponseBody
     public Result<String> doLogin(HttpServletResponse response, @Valid LoginVo loginVo) {//加入JSR303参数校验
+    	System.out.println("$$$$$$$$$login/do_login$$$$$$$$$$$$$$$$$");
+    	System.out.println("记录校验：");
         log.info(loginVo.toString());
         String token = userService.login(response, loginVo);
+        if(!StringUtils.isEmpty(token)){
+        	System.out.println("登陆成功~~");
+        }else{
+        	System.out.println("登陆失败~~");
+        }
+        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$");
         return Result.success(token);
     }
 

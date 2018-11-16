@@ -1,4 +1,14 @@
 
+# yeqizhang:
+
+"验证用户账号密码都正确情况下，通过UUID生成唯一id作为token，再将token作为key、用户信息作为value模拟session存储到redis，同时将token存储到cookie，保存登录状态
+好处： 在分布式集群情况下，服务器间需要同步，定时同步各个服务器的session信息，会因为延迟到导致session不一致，使用redis把session数据集中存储起来，解决session不一致问题。"
+
+该项目不处理session不一致问题。采取使用往客户端cookies存入判断登陆状态的redis缓存的key（token）来判断客户端登陆状态，也就是说，存入redis的key是cookie中的token，
+用户对象为value，请求后台时验证登陆则通过cookies中的token来判断。
+
+    
+原 repo主的README：
      
 ## 系统介绍
 本系统是使用SpringBoot开发的高并发限时抢购秒杀系统，除了实现基本的登录、查看商品列表、秒杀、下单等功能，项目中还针对高并发情况实现了系统缓存、降级和限流。

@@ -30,10 +30,6 @@ public class MQConfig {
     public Queue queue() {
         return new Queue(QUEUE, true);
     }
-//    @Bean
-//    public Queue queue() {
-//        return new Queue(QUEUE, true);
-//    }
 
     /**
      * Topic模式 交换机Exchange

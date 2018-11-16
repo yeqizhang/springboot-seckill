@@ -55,6 +55,40 @@
             <td><a th:href="'/goods_detail.htm?goodsId='+${goods.id}">详情</a></td>
         </tr>
     </table>
+    
+    <table class="table" id="user">
+	        <tr>  
+	        	<td>sessionId</td>  
+	        	<td id="sessionId" colspan="3"></td> 
+	        </tr>
+	        <tr>  
+	        	<td>端口</td>  
+	        	<td id="serverPort" colspan="3"></td> 
+	        </tr>
+	     </table>   
 </div>
 </body>
+<script>
+	$(function () {
+        getSession();
+    });
+
+	function getSession() {
+        $.ajax({
+            url: "/user/getSession",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                if (data.sessionId) {
+                    //将数据渲染出来
+                    $("#sessionId").html(data.sessionId);
+                    $("#serverPort").html(data.serverPort);
+                }
+            },
+            error: function () {
+                //layer.msg("客户端请求有误");
+            }
+        });
+    }
+</script>
 </html>

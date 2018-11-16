@@ -20,7 +20,7 @@ import com.jesper.seckill.bean.User;
 
 public class UserUtil {
 	
-	private static void createUser(int count) throws Exception{
+	/*private static void createUser(int count) throws Exception{
 		List<User> users = new ArrayList<User>(count);
 		//生成用户
 		for(int i=0;i<count;i++) {
@@ -94,9 +94,9 @@ public class UserUtil {
 		raf.close();
 		
 		System.out.println("over");
-	}
+	}*/
 	
 	public static void main(String[] args)throws Exception {
-		createUser(5000);
+		//createUser(5000);
 	}
 }
