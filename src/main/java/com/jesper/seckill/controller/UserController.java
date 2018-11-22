@@ -40,7 +40,7 @@ public class UserController {
     @RequestMapping("/getSession")
     @ResponseBody
     public String getSession(HttpServletRequest request, HttpServletResponse response,Model model, User user) {
-    	System.out.println("##/goods/to_list跳转的goods_list.html页面中 请求/user/getSession展示session##");
+//    	System.out.println("##/goods/to_list跳转的goods_list.html页面中 请求/user/getSession展示session##");
     	//获取sessionId
         String sessionId=request.getSession().getId();
     	int serverPort = request.getServerPort();
@@ -48,12 +48,12 @@ public class UserController {
     	json.put("sessionId", sessionId);
     	json.put("serverPort", serverPort);
     	//使用Date
-    	Date d = new Date();
-    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    	System.out.println("当前时间：" + sdf.format(d));
-    	System.out.println("sessionId:" + sessionId);
-    	System.out.println("serverPort:" + serverPort);
-    	System.out.println("######################");
+//    	Date d = new Date();
+//    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//    	System.out.println("当前时间：" + sdf.format(d));
+//    	System.out.println("sessionId:" + sessionId);
+//    	System.out.println("serverPort:" + serverPort);
+//    	System.out.println("######################");
     	
         return json.toJSONString();
         

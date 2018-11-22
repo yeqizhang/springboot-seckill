@@ -1,12 +1,22 @@
 
 # yeqizhang:
 
-"验证用户账号密码都正确情况下，通过UUID生成唯一id作为token，再将token作为key、用户信息作为value模拟session存储到redis，同时将token存储到cookie，保存登录状态
+"验证用户账号密码都正确情况下，通过UUID生成唯一id作为token，再将token作为key、用户信息作为value模拟session存储到redis（token-user,也可以token-sessionId），
+同时将token存储到cookie，保存登录状态.
+
 好处： 在分布式集群情况下，服务器间需要同步，定时同步各个服务器的session信息，会因为延迟到导致session不一致，使用redis把session数据集中存储起来，解决session不一致问题。"
 
-该项目不处理session不一致问题。采取使用往客户端cookies存入判断登陆状态的redis缓存的key（token）来判断客户端登陆状态，也就是说，存入redis的key是cookie中的token，
-用户对象为value，请求后台时验证登陆则通过cookies中的token来判断。
+该项目不处理session不一致问题。采取使用往客户端cookie存入判断登陆状态的redis缓存的key（token）来判断客户端登陆状态，也就是说，存入redis的key是cookie中的token，用户对象为value，请求后台时验证登陆则通过cookie中的token来判断。
 
+1、（测试可行）如果要保持客户端对应session不变，则需要在nginx服务器的upstream里设置ip_hash，每个请求按访问ip的hash结果分配，映射到固定某一台的服务器。缺点是可能导
+致负载不均衡。相当于只是分流。但是固定的服务器挂掉后，还是能将请求转移到另外的服务器。
+
+2、（待验证）如果要保持session一致并且不使用ip_hash ，则采取将token-sessionId的keyValue形式存入redis缓存。在拦截器中换成获取缓存中sessionId是否存在而不是获取user是否存在来作为依据验证登录，并
+且如果在redis中查询到sessionId，则将本请求的sessionId设置成redis里查到的(会请求到不同的servlet容器)，并将客户端的cookie也进行修改校正（可能不需要，客户
+端cookie中的JSESSIONID会根据sessionId自动变？）。
+在登录成功后，需要将当前生成的sessionId存入到redis中。
+
+3、对于2的一种方案是使用 redis + spring-session来实现分布式应用的session一致。（代码已实现）
     
 原 repo主的README：
      

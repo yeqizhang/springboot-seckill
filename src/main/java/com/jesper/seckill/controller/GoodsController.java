@@ -58,33 +58,28 @@ public class GoodsController {
     @RequestMapping(value = "/to_list", produces = "text/html")
     @ResponseBody
     public String list(HttpServletRequest request, HttpServletResponse response, Model model, User user) throws IOException {
-    	System.out.println("~~~~~~~~~~~~~/goods/to_list~~~~~~~~~~~~~~~");
+    	/*System.out.println("~~~~~~~~~~~~~/goods/to_list~~~~~~~~~~~~~~~");
     	//获取sessionId
         String sessionId=request.getSession().getId();
         model.addAttribute("sessionId", sessionId);
-        int serverPort = request.getServerPort();
-        
         //使用Date
     	Date d = new Date();
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     	System.out.println("当前时间：" + sdf.format(d));
     	System.out.println("sessionId:" + sessionId);
-    	System.out.println("serverPort:" + serverPort);
     	
         String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";
-        model.addAttribute("serverPort", serverPort);
-        System.out.println(basePath);
+        System.out.println(basePath);*/
         
         //检验浏览器是否有cookies.或者cookies对应的session是否过期 .  user通过UserArgumentResolver写入方法参数。
-    	if(user==null) {
+        // 已使用拦截器验证登陆
+    	/*if(user==null) {
             response.sendRedirect("/login/to_login");	//@ResponseBody 使用此方法重定向
             System.out.println("/goods/to_list 跳转登陆--> /login/to_login");
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             return null;
-        }
-    	
-    	System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    	
+        }*/
+    	//System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     	
     	
         //取缓存   (会把html缓存起来)
@@ -117,11 +112,14 @@ public class GoodsController {
     @ResponseBody
     public String detail2(HttpServletRequest request, HttpServletResponse response, Model model, User user, @PathVariable("goodsId") long goodsId) throws IOException {
        
-    	//检验浏览器是否有cookies.   user通过UserArgumentResolver写入方法参数。
-    	if(user==null) {
+    	//检验浏览器是否有cookies.或者cookies对应的session是否过期 .  user通过UserArgumentResolver写入方法参数。
+        // 已使用拦截器验证登陆
+    	/*if(user==null) {
             response.sendRedirect("/login/to_login");	//@ResponseBody 使用此方法重定向
+            System.out.println("/goods/to_list 跳转登陆--> /login/to_login");
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             return null;
-        }
+        }*/
     	
     	model.addAttribute("user", user);
         //取缓存
@@ -172,11 +170,14 @@ public class GoodsController {
     @ResponseBody
     public Result<GoodsDetailVo> detail(HttpServletRequest request, HttpServletResponse response, Model model, User user, @PathVariable("goodsId") long goodsId) throws IOException {
     	
-    	//检验浏览器是否有cookies.   user通过UserArgumentResolver写入方法参数。
-    	if(user==null) {
+    	//检验浏览器是否有cookies.或者cookies对应的session是否过期 .  user通过UserArgumentResolver写入方法参数。
+        // 已使用拦截器验证登陆
+    	/*if(user==null) {
             response.sendRedirect("/login/to_login");	//@ResponseBody 使用此方法重定向
+            System.out.println("/goods/to_list 跳转登陆--> /login/to_login");
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             return null;
-        }
+        }*/
     	
         //根据id查询商品详情
         GoodsVo goods = goodsService.getGoodsVoByGoodsId(goodsId);

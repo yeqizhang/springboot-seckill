@@ -86,7 +86,7 @@ public class UserService {
         }
         //生成唯一id作为token
         String token = UUIDUtil.uuid();
-        addCookie(response, token, user);
+        addRedisAndCookie(response, token, user);
         return token;
     }
 
@@ -94,7 +94,7 @@ public class UserService {
      * 将token做为key，用户信息做为value 存入redis模拟session
      * 同时将token存入cookie，保存登录状态
      */
-    public void addCookie(HttpServletResponse response, String token, User user) {
+    public void addRedisAndCookie(HttpServletResponse response, String token, User user) {
         redisService.set(UserKey.token, token, user);
         Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, token);
         cookie.setMaxAge(UserKey.token.expireSeconds());
@@ -112,7 +112,7 @@ public class UserService {
         User user = redisService.get(UserKey.token, token, User.class);
         //延长有效期，有效期等于最后一次操作+有效期
         if (user != null) {
-            addCookie(response, token, user);
+        	addRedisAndCookie(response, token, user);
         }
         return user;
     }
